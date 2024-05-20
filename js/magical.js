@@ -22,6 +22,7 @@ import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 const scene = new THREE.Scene();
 //Create a new camera with positions and angles
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+// const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 10000);
 
 //Keep the 3D model on a global variable so we can access it later
 const models = [];
@@ -173,15 +174,14 @@ composer.addPass(outputPass);
 document.getElementById("container3D").appendChild(renderer.domElement);
 
 //Set how far the camera will be from the 3D model
-camera.position.set(0, 3, 4);
-camera.lookAt(0, 5, 0);
+camera.position.set(-0.006, 1.6, 2.6);
 
 //Add helper to scene
-const axesHelper = new THREE.AxesHelper(50);
-scene.add(axesHelper);
+// const axesHelper = new THREE.AxesHelper(50);
+// scene.add(axesHelper);
 
-const gridHelper = new THREE.GridHelper(10, 10);
-scene.add(gridHelper);
+// const gridHelper = new THREE.GridHelper(10, 10);
+// scene.add(gridHelper);
 
 // Add lights to the scene, so we can actually see the 3D model
 const frontLight = new THREE.RectAreaLight(0xFF8B3B, 3, 0.5, 0.5);
@@ -256,27 +256,13 @@ locationBlender(sphere2, 0.363, -0.232, 1.684);
 sphere2.layers.set(0);
 scene.add(sphere2);
 
-const verticesOfCube = [
-    1, 1, 1,
-    -1, -1, 1,
-    -1, 1, -1,
-    1, -1, -1
-];
-
-const indicesOfFaces = [
-    2, 1, 0,
-    0, 3, 2,
-    1, 3, 0,
-    2, 3, 1
-];
-
-const geometry = new THREE.PolyhedronGeometry(verticesOfCube, indicesOfFaces, 1, 1);
-const test = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: new THREE.Color("#46FFBE") }));
-// test.position.set(3, 3, 3);
-// scene.add(test);
-
 //Set mouse controls
 controls = new OrbitControls(camera, renderer.domElement);
+controls.target.set(0, 1.3, 0);
+controls.autoRotate = true;
+controls.enableRotate = false;
+controls.enableZoom = false;
+controls.enablePan = false;
 
 let now = new Date();
 let then = 0;
