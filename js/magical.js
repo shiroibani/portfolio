@@ -267,7 +267,7 @@ controls = new OrbitControls(camera, renderer.domElement);
 controls.target.set(0, 1.3, 0);
 // controls.autoRotate = true;
 // controls.enableRotate = false;
-// controls.enableZoom = false;
+controls.enableZoom = false;
 controls.enablePan = false;
 
 //Delta Time
@@ -327,7 +327,7 @@ function rotateAroundAxis(angle) {
 
 }
 
-var mouseX = 0, mouseY = 0;
+var mouseX = 0
 //Render the scene
 function animate(e) {
     requestAnimationFrame(animate);
@@ -335,10 +335,17 @@ function animate(e) {
     controls.update();
 
     onmousemove = function (e) {
-        var angle = -(e.clientX - mouseX) / 1000;
-        rotateAroundAxis(angle);
-        console.log(new THREE.Vector2(e.clientX, e.clientY).angle());
-        mouseX = e.clientX;
+        if (girl.length >= 3) {
+            if (mouseX == 0) {
+                mouseX = window.innerHeight / 1.4;
+                console.log("mouse");
+            } else {
+                var angle = -(e.clientX - mouseX) / 1000;
+                rotateAroundAxis(angle);
+                // console.log(e.clientX);F
+                mouseX = e.clientX;
+            }
+        }
     }
 
     models.forEach(function (model) {
