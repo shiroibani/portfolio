@@ -52,6 +52,8 @@ function rotationBlender(object, x, y, z) {
     object.rotateOnWorldAxis(new THREE.Vector3(0, 0, 1), THREE.MathUtils.degToRad(y));
 };
 
+const girl = [];
+
 //Load the .gltf file
 comModelToRender.forEach(function (comModel) {
     loader.load(
@@ -60,7 +62,9 @@ comModelToRender.forEach(function (comModel) {
             //IF the file is loader, add it to the scene
             const model = gltf.scene;
             model.scale.set(0.965, 0.965, 0.965);
+            if (comModel == "magicalGirl") girl.push(model);
             scene.add(model);
+
 
             // const box = new THREE.Box3().setFromObject(model);
             // const helper = new THREE.Box3Helper(box, 0xffff00);
@@ -250,28 +254,87 @@ const sphere1 = new THREE.Mesh(new THREE.IcosahedronGeometry(0.029, 15), materia
 locationBlender(sphere1, -0.052843, -0.325, 1.14);
 sphere1.layers.set(0);
 scene.add(sphere1);
+girl.push(sphere1);
 
 const sphere2 = new THREE.Mesh(new THREE.IcosahedronGeometry(0.07, 15), material);
 locationBlender(sphere2, 0.363, -0.232, 1.684);
 sphere2.layers.set(0);
 scene.add(sphere2);
+girl.push(sphere2);
 
 //Set mouse controls
 controls = new OrbitControls(camera, renderer.domElement);
 controls.target.set(0, 1.3, 0);
-controls.autoRotate = true;
+// controls.autoRotate = true;
 controls.enableRotate = false;
 controls.enableZoom = false;
 controls.enablePan = false;
 
+//Delta Time
 let now = new Date();
 let then = 0;
+
+const points = [];
+points.push(new THREE.Vector3(-0.05, -5, 0.2));
+points.push(new THREE.Vector3(-0.05, 5, 0.2));
+
+//Draw line
+const geometry = new THREE.BufferGeometry().setFromPoints(points);
+const line = new THREE.Line(
+    geometry,
+    new THREE.LineBasicMaterial({ color: 0xff00ff })
+);
+scene.add(line);
+
+THREE.Object3D.prototype.rotateAroundWorldAxis = function () {
+
+    // rotate object around axis in world space (the axis passes through point)
+    // axis is assumed to be normalized
+    // assumes object does not have a rotated parent
+
+    var q = new THREE.Quaternion();
+
+    return function rotateAroundWorldAxis(point, axis, angle) {
+
+        q.setFromAxisAngle(axis, angle);
+
+        this.applyQuaternion(q);
+
+        this.position.sub(point);
+        this.position.applyQuaternion(q);
+        this.position.add(point);
+
+        return this;
+
+    }
+
+}();
+
+function rotateAroundAxis() {
+
+    const vecA = points[0];
+    const vecB = points[1];
+    const vec = new THREE.Vector3();
+
+    vec.copy(vecA).sub(vecB).normalize();
+
+    if (girl.length >= 3) {
+        girl.forEach(function (child) {
+            child.rotateAroundWorldAxis(vecA, vec, 0.01);
+        })
+    }
+
+}
 
 //Render the scene
 function animate(e) {
     requestAnimationFrame(animate);
     //Here we could add some code to update the scene, adding som automatic movement
     controls.update();
+
+    // girl.rotation.y += 0.01;
+    // console.log(vector);
+    rotateAroundAxis();
 
     models.forEach(function (model) {
         // Rotate star 
