@@ -1,0 +1,72 @@
+body {
+    margin: 0;
+    font-family: 'Font Awesome 6 Free', 'Montserrat', sans-serif;
+    color: aliceblue;
+    background-color: #000000d1;
+}
+
+header {
+    height: 5vh;
+    padding-top: 3em;
+    text-align: center;
+}
+
+a {
+    color: aliceblue;
+    text-decoration: none;
+    position: absolute;
+    top: 3em;
+    left: 3em;
+    border-radius: 10%;
+    transition: 0.3s;
+    z-index: 2;
+}
+
+a:hover {
+    cursor: pointer;
+    border-radius: 10%;
+    color: #000000d1;
+    background-color: aliceblue;
+    transition: 0.3s;
+}
+
+a i {
+    margin: 30px;
+}
+
+header h1 {
+    font-size: 2em;
+    font-weight: 900;
+    margin: 0;
+}
+
+#descriptions {
+    position: absolute;
+    bottom: 0;
+}
+
+#descriptions ul {
+    display: flex;
+    margin: 0;
+    padding: 2em;
+}
+
+#descriptions ul li {
+    margin: 0 2em;
+    list-style-type: none;
+}
+
+#descriptions ul li p {
+    display: inline;
+    font-weight: 900;
+    font-family: "Font Awesome 6 Free";
+}
+
+#container3D canvas {
+    width: 100vw !important;
+    height: 100vh !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
