@@ -328,6 +328,7 @@ function rotateAroundAxis(angle) {
 }
 
 var mouseX = 0
+var isInitMouseXCorrect = false;
 //Render the scene
 function animate(e) {
     requestAnimationFrame(animate);
@@ -335,16 +336,15 @@ function animate(e) {
     controls.update();
 
     onmousemove = function (e) {
-        if (girl.length >= 3) {
-            if (mouseX == 0) {
-                mouseX = window.innerHeight / 1.4;
-                console.log("mouse");
-            } else {
-                var angle = -(e.clientX - mouseX) / 1000;
-                rotateAroundAxis(angle);
-                // console.log(e.clientX);F
-                mouseX = e.clientX;
-            }
+        if (!isInitMouseXCorrect) {
+            mouseX = window.innerHeight / 1.4;
+            isInitMouseXCorrect = true;
+            console.log("mouse");
+        } else {
+            var angle = -(e.clientX - mouseX) / 1000;
+            rotateAroundAxis(angle);
+            // console.log(e.clientX);F
+            mouseX = e.clientX;
         }
     }
 
