@@ -338,7 +338,7 @@ function animate(e) {
     onmousemove = function (e) {
         if (girl.length >= 3) {
             if (!isInitMouseXCorrect) {
-                mouseX = window.innerHeight / 1.4;
+                mouseX = window.innerHeight;
                 isInitMouseXCorrect = true;
                 console.log("mouse");
             } else {
