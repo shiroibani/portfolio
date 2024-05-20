@@ -279,12 +279,12 @@ points.push(new THREE.Vector3(-0.05, -5, 0.2));
 points.push(new THREE.Vector3(-0.05, 5, 0.2));
 
 //Draw line
-const geometry = new THREE.BufferGeometry().setFromPoints(points);
-const line = new THREE.Line(
-    geometry,
-    new THREE.LineBasicMaterial({ color: 0xff00ff })
-);
-scene.add(line);
+// const geometry = new THREE.BufferGeometry().setFromPoints(points);
+// const line = new THREE.Line(
+//     geometry,
+//     new THREE.LineBasicMaterial({ color: 0xff00ff })
+// );
+// scene.add(line);
 
 THREE.Object3D.prototype.rotateAroundWorldAxis = function () {
 
