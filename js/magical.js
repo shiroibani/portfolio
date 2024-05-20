@@ -266,8 +266,8 @@ girl.push(sphere2);
 controls = new OrbitControls(camera, renderer.domElement);
 controls.target.set(0, 1.3, 0);
 // controls.autoRotate = true;
-controls.enableRotate = false;
-controls.enableZoom = false;
+// controls.enableRotate = false;
+// controls.enableZoom = false;
 controls.enablePan = false;
 
 //Delta Time
@@ -279,7 +279,7 @@ points.push(new THREE.Vector3(-0.05, -5, 0.2));
 points.push(new THREE.Vector3(-0.05, 5, 0.2));
 
 //Draw line
-// const geometry = new THREE.BufferGeometry().setFromPoints(points);
+// const geometry = newTHREE.BufferGeometry().setFromPoints(points);
 // const line = new THREE.Line(
 //     geometry,
 //     new THREE.LineBasicMaterial({ color: 0xff00ff })
@@ -310,7 +310,7 @@ THREE.Object3D.prototype.rotateAroundWorldAxis = function () {
 
 }();
 
-function rotateAroundAxis() {
+function rotateAroundAxis(angle) {
 
     const vecA = points[0];
     const vecB = points[1];
@@ -320,21 +320,26 @@ function rotateAroundAxis() {
 
     if (girl.length >= 3) {
         girl.forEach(function (child) {
-            child.rotateAroundWorldAxis(vecA, vec, 0.01);
+            child.rotateAroundWorldAxis(vecA, vec, angle);
+            // child.lookAt(angle, 0, 0);
         })
     }
 
 }
 
+var mouseX = 0, mouseY = 0;
 //Render the scene
 function animate(e) {
     requestAnimationFrame(animate);
     //Here we could add some code to update the scene, adding som automatic movement
     controls.update();
 
-    // girl.rotation.y += 0.01;
-    // console.log(vector);
-    rotateAroundAxis();
+    onmousemove = function (e) {
+        var angle = -(e.clientX - mouseX) / 1000;
+        rotateAroundAxis(angle);
+        console.log(new THREE.Vector2(e.clientX, e.clientY).angle());
+        mouseX = e.clientX;
+    }
 
     models.forEach(function (model) {
         // Rotate star 
